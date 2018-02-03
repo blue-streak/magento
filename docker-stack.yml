@@ -1,0 +1,77 @@
+app:
+  image: 'shakyshane/m2pwa-nginx:2.2'
+  links:
+    - mage
+    - pwa
+db:
+  environment:
+    - MYSQL_DATABASE=docker
+    - MYSQL_PASSWORD=docker
+    - MYSQL_ROOT_PASSWORD=docker
+    - MYSQL_USER=docker
+  expose:
+    - '3306'
+  image: 'mysql:5.7.10'
+letsencrypt:
+  command: >
+    -c "sleep 20 && certbot certonly --standalone -d m2-pwa.tk -d shop.m2-pwa.tk
+    --text --agree-tos --email shane.osbourne8@gmail.com --server
+    https://acme-v01.api.letsencrypt.org/directory --rsa-key-size 4096 --verbose
+    --renew-by-default --standalone-supported-challenges http-01"
+  entrypoint: bash
+  environment:
+    - TERM=xterm
+  image: 'quay.io/letsencrypt/letsencrypt:latest'
+  ports:
+    - '80'
+    - '443'
+  volumes:
+    - /etc/letsencrypt
+    - /var/lib/letsencrypt
+nginx:
+  cpu_shares: 256
+  environment:
+    - MY_DOMAIN_NAME=m2-pwa.tk
+  image: 'shakyshane/le-2:1.2'
+  links:
+    - app
+    - letsencrypt
+  mem_limit: 2048m
+  ports:
+    - '80:80'
+    - '443:443'
+  volumes_from:
+    - letsencrypt
+php:
+  environment:
+    - HTTPS=on
+    - MYSQL_DATABASE=docker
+    - MYSQL_PASSWORD=docker
+    - MYSQL_ROOT_PASSWORD=docker
+    - MYSQL_USER=docker
+    - PHP_MEMORY_LIMIT=3G
+    - MAIL_HOST=mail
+    - MAIL_PORT=1025
+  image: 'shakyshane/m2pwa-php:2.0'
+  links:
+    - db
+  mem_limit: 1024m
+  ports:
+    - '9000'
+
+mage:
+  image: shakyshane/m2pwa-mage:1.1
+  links:
+    - php
+  volumes_from:
+    - php
+
+pwa:
+  image: 'shakyshane/pwa-fe:latest'
+  links:
+    - mage
+
+redis:
+  image: 'redis:3-alpine'
+  ports:
+    - '6379'

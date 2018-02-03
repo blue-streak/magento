@@ -1,0 +1,62 @@
+version: '2'
+volumes:
+  db-data: null
+  app-env: null
+services:
+  pwa:
+    container_name: pwa-nginx
+    image: 'nginx:stable-alpine'
+    depends_on:
+      - mage
+    volumes:
+      - './pwa:/usr/share/nginx/html'
+      - './pwa/nginx/sites:/etc/nginx/conf.d'
+  mage:
+    container_name: mage-nginx
+    image: 'nginx:stable-alpine'
+    volumes_from:
+      - php
+    working_dir: /var/www
+    depends_on:
+      - php
+    volumes:
+      - '.docker/mage:/etc/nginx/conf.d'
+  entry:
+    container_name: entry-nginx
+    image: 'nginx:stable-alpine'
+    volumes:
+      - '.docker/entry/sites:/etc/nginx/conf.d'
+      - '.docker/certs/live:/etc/letsencrypt/live'
+    depends_on:
+      - pwa
+      - mage
+    ports:
+      - '80:80'
+      - '443:443'
+  php:
+    container_name: dev-playground-php
+    environment:
+      - HTTPS=on
+      - MYSQL_DATABASE=docker
+      - MYSQL_PASSWORD=docker
+      - MYSQL_ROOT_PASSWORD=docker
+      - MYSQL_USER=docker
+      - PHP_MEMORY_LIMIT=3G
+    image: 'shakyshane/m2pwa-php:2.0'
+    depends_on:
+      - db
+    ports:
+      - 9000
+  db:
+    container_name: dev-playground-db
+    image: 'mysql:5.6'
+    volumes:
+      - 'db-data:/var/lib/mysql'
+    ports:
+      - '3306'
+    restart: unless-stopped
+  redis:
+    container_name: dev-playground-redis
+    image: 'redis:3-alpine'
+    ports:
+      - '6379'

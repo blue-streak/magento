@@ -1,0 +1,8 @@
+env:
+  LE_IMAGE: shakyshane/le-2:1.2
+  NGINX_IMAGE: shakyshane/m2pwa-nginx
+  PHP_IMAGE: shakyshane/m2pwa-php
+
+tasks:
+  build-nginx: >
+    @sh cd nginx && docker
