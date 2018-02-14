@@ -14,6 +14,11 @@ RUN chsh -s /bin/bash www-data \
 
 RUN su - www-data -c "COMPOSER_CACHE_DIR=.docker/composer-cache composer update --no-dev --no-interaction --prefer-dist -o"
 
+COPY app app
+
+RUN find . -user root | xargs chown www-data:www-data \
+    && chmod +x bin/magento
+
 RUN chmod +x bin/magento
 
 RUN chmod -R 777 /var/www/var

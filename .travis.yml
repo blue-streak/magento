@@ -7,7 +7,6 @@ env:
   global:
     - COMMIT=${TRAVIS_COMMIT::8}
     - MAGENTO_REPO=bluestreak/magento
-    - SRC_REPO=bluestreak/src
 
 before_script:
   - docker pull $MAGENTO_REPO:latest
@@ -20,11 +19,6 @@ script:
     -t $MAGENTO_REPO:$COMMIT
     --cache-from $MAGENTO_REPO:latest
     .
-  - >
-    docker build
-    -f src.Dockerfile
-    -t $SRC_REPO:$COMMIT
-    .
 
 after_success:
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
@@ -34,9 +28,4 @@ after_success:
   - docker tag $MAGENTO_REPO:$COMMIT $MAGENTO_REPO:$TAG
   - docker tag $MAGENTO_REPO:$COMMIT $MAGENTO_REPO:travis-$TRAVIS_BUILD_NUMBER
 
-  # Magento repo
-  - docker tag $SRC_REPO:$COMMIT $SRC_REPO:$TAG
-  - docker tag $SRC_REPO:$COMMIT $SRC_REPO:travis-$TRAVIS_BUILD_NUMBER
-
   - docker push $MAGENTO_REPO
-  - docker push $SRC_REPO
