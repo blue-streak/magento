@@ -24,6 +24,7 @@ script:
     docker build
     -f src.Dockerfile
     -t $SRC_REPO:$COMMIT
+    .
 
 after_success:
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
