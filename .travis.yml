@@ -26,4 +26,5 @@ after_success:
   - docker tag $MAGENTO_REPO:$COMMIT $MAGENTO_REPO:travis-$TRAVIS_BUILD_NUMBER
 
 
-  - docker push $DEPS_REPO $MAGENTO_REPO
+  - docker push $DEPS_REPO
+  - docker push $MAGENTO_REPO
