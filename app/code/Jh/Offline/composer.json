@@ -1,0 +1,21 @@
+{
+    "name": "jh/module-offline",
+    "description": "Provide an offline view",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "info@mage2gen.com",
+            "name": "Mage2Gen"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Jh\\Offline\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

@@ -2,10 +2,28 @@ sudo: required
 install: true
 services:
   - docker
+
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::8}
+    - DEPS_REPO=bluestreak/deps
+    - MAGENTO_REPO=bluestreak/magento
+
 script:
-  - docker build -t "bluestreak/magento:$TRAVIS_BUILD_NUMBER" .
+  - docker build -f deps.Dockerfile -t $DEPS_REPO:$COMMIT .
+  - docker build -f Dockerfile -t $MAGENTO_REPO:$COMMIT .
+
 after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-    docker push "bluestreak/magento:$TRAVIS_BUILD_NUMBER";
-    fi
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+
+  # Deps repo
+  - docker tag $DEPS_REPO:$COMMIT $DEPS_REPO:$TAG
+  - docker tag $DEPS_REPO:$COMMIT $DEPS_REPO:travis-$TRAVIS_BUILD_NUMBER
+
+  # Magento repo
+  - docker tag $MAGENTO_REPO:$COMMIT $MAGENTO_REPO:$TAG
+  - docker tag $MAGENTO_REPO:$COMMIT $MAGENTO_REPO:travis-$TRAVIS_BUILD_NUMBER
+
+
+  - docker push $DEPS_REPO $MAGENTO_REPO
