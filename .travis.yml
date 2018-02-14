@@ -10,7 +10,6 @@ env:
 
 before_script:
   - docker pull $MAGENTO_REPO:latest
-#  - docker pull $SRC_REPO:latest
 
 script:
   - >

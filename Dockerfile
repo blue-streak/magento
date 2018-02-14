@@ -24,6 +24,10 @@ RUN chmod +x bin/magento
 RUN chmod -R 777 /var/www/var
 RUN chmod -R 777 /var/www/generated
 
-VOLUME ["/var/www"]
+VOLUME ["/var/www/app/etc"]
+VOLUME ["/var/www/pub"]
+VOLUME ["/var/www/setup"]
+VOLUME ["/var/www/var"]
+
 ENTRYPOINT ["/usr/local/bin/docker-configure"]
 CMD ["php-fpm"]
