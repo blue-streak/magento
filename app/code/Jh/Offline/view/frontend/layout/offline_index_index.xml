@@ -4,5 +4,35 @@
 		<referenceContainer name="content">
 			<block class="Jh\Offline\Block\Index\Index" name="index.index" template="Jh_Offline::index/index.phtml"/>
 		</referenceContainer>
+		<referenceContainer name="page.messages" remove="true" />
+		<referenceContainer name="header.panel.wrapper" remove="true"/>
+		<referenceBlock name="head.polyfill" remove="true" />
+		<referenceBlock name="head.components" remove="true" />
+		<referenceBlock name="translate" remove="true" />
+		<referenceBlock name="authentication-popup" remove="true" />
+		<referenceBlock name="header.links" remove="true" />
+		<referenceBlock name="store.settings.language" remove="true" />
+		<referenceBlock name="store_language" remove="true" />
+		<referenceBlock name="store.settings.currency" remove="true" />
+		<referenceBlock name="currency" remove="true" />
+		<referenceBlock name="catalog.compare.link" remove="true" />
+		<referenceBlock name="advanced-search-link" remove="true" />
+		<referenceBlock name="minicart" remove="true" />
+		<referenceBlock name="frontend-storage-manager" remove="true" />
+		<referenceBlock name="pageCache" remove="true" />
+		<referenceBlock name="customer.section.config" remove="true" />
+		<referenceBlock name="customer.customer.data" remove="true" />
+		<referenceBlock name="customer.data.invalidation.rules" remove="true"/>
+		<referenceBlock name="skip_to_content.target" remove="true"/>
+		<referenceBlock name="top.search" remove="true"/>
+		<referenceBlock name="navigation.sections" remove="true"/>
+		<referenceBlock name="global_notices" remove="true"/>
+		<referenceBlock name="cookie_notices" remove="true"/>
+		<referenceBlock name="require.js" remove="true"/>
+		<referenceBlock name="logger" remove="true"/>
+		<referenceBlock name="js_cookies" remove="true"/>
+		<referenceBlock name="store_switcher" remove="true"/>
+		<referenceBlock name="absolute_footer" remove="true"/>
+		<referenceContainer name="footer" remove="true"/>
 	</body>
 </page>

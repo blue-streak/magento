@@ -16,7 +16,7 @@ RUN su - www-data -c "COMPOSER_CACHE_DIR=.docker/composer-cache composer update 
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install nodejs
-RUN npm i -g m2-builder
+RUN npm i -g m2-builder workbox-cli@beta
 
 COPY app app
 

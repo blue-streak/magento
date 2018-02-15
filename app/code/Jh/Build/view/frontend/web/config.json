@@ -1,7 +1,7 @@
 {
   "input": "pub/static/frontend/Magento/luma/en_GB/requirejs-config.js",
   "build": {
-    "optimize": "uglify",
+    "optimize": "none",
     "generateSourceMaps": true,
 
     "report": "pub/bundle-report.txt"

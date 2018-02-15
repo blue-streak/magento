@@ -2,3 +2,4 @@
 /vendor
 /.docker/composer-cache
 /pub
+node_modules
