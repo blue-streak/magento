@@ -3,6 +3,7 @@
   "build": {
     "optimize": "uglify",
     "generateSourceMaps": true,
+
     "report": "pub/bundle-report.txt"
   },
   "preMods": [
