@@ -14,6 +14,10 @@ RUN chsh -s /bin/bash www-data \
 
 RUN su - www-data -c "COMPOSER_CACHE_DIR=.docker/composer-cache composer update --no-dev --no-interaction --prefer-dist -o"
 
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install nodejs
+RUN npm i -g m2-builder
+
 COPY app app
 
 RUN find . -user root | xargs chown www-data:www-data \
