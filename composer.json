@@ -11,7 +11,9 @@
         "magento/product-community-edition": "2.2.0",
         "composer/composer": "@alpha"
     },
-    "require-dev": {},
+    "require-dev": {
+        "wearejh/m2-module-jh-block-logger": "dev-master"
+    },
     "autoload": {
         "psr-4": {
             "Magento\\Framework\\": "lib/internal/Magento/Framework/",
